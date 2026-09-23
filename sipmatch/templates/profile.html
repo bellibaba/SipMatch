@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Your profile — SipMatch{% endblock %}
+{% block content %}
+<section class="page-shell">
+  <div class="page-intro"><p class="eyebrow">Your cellar, in progress</p><h1>Hello, {{ user.name }}</h1><p>Every rating sharpens the next recommendation.</p></div>
+  <div class="profile-grid">
+    <form class="panel form-panel" method="post"><h2>Account</h2><label>Name<input name="name" value="{{ user.name }}" required></label><label>Email<input type="email" name="email" value="{{ user.email }}" required></label><button class="button button-secondary" type="submit">Save details</button></form>
+    <section class="panel taste-summary"><div class="panel-title"><h2>Taste profile</h2><a href="{{ url_for('onboarding') }}">Edit</a></div>{% if preference %}<dl><div><dt>Sweetness</dt><dd>{{ preference.sweetness|title }}</dd></div><div><dt>Acidity</dt><dd>{{ preference.acidity|title }}</dd></div><div><dt>Strength</dt><dd>{{ preference.strength|title }}</dd></div><div><dt>Favorite type</dt><dd>{{ preference.preferred_type }}</dd></div></dl><h3>Past purchases</h3><p>{{ preference.past_purchases or 'None added yet.' }}</p>{% else %}<p>Build your taste profile to unlock recommendations.</p><a class="button button-primary" href="{{ url_for('onboarding') }}">Start profile</a>{% endif %}</section>
+  </div>
+  <section class="history-section"><div class="section-heading horizontal"><div><p class="eyebrow">Taste history</p><h2>Your ratings</h2></div><a class="text-link" href="{{ url_for('drinks') }}">Rate another →</a></div>{% if history %}<div class="history-list">{% for item in history %}<article><div><span class="tag">{{ item.type }}</span><h3>{{ item.name }}</h3></div><strong>★ {{ item.rating }}</strong><time>{{ item.rated_at.strftime('%b %d, %Y') }}</time></article>{% endfor %}</div>{% else %}<div class="empty-state small"><h3>No ratings yet</h3><p>Your tried-and-rated drinks will appear here.</p></div>{% endif %}</section>
+</section>
+{% endblock %}

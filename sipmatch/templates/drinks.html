@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Discover drinks — SipMatch{% endblock %}
+{% block content %}
+<section class="discover-hero">
+  <div><p class="eyebrow">Shelf to shortlist</p><h1>Find your match</h1><p>Upload a clear shelf photo or search by bottle, style, or flavor.</p></div>
+  <div class="discovery-tools panel">
+    <form method="post" enctype="multipart/form-data" class="upload-form">
+      <label class="drop-zone" for="shelf-photo"><span class="upload-icon">⌁</span><strong>Upload a shelf photo</strong><small>JPG or PNG, up to 8 MB</small><input id="shelf-photo" name="shelf_photo" type="file" accept="image/png,image/jpeg" required></label>
+      <button class="button button-primary" type="submit">Read labels</button>
+    </form>
+    <span class="or-rule">or</span>
+    <form method="get" class="search-form"><label for="drink-search" class="sr-only">Search drinks</label><input id="drink-search" name="q" value="{{ search }}" placeholder="Try “Riesling,” “beer,” or “citrus”"><button type="submit">Search</button></form>
+  </div>
+</section>
+
+<section class="results-section">
+  <div class="results-head"><div><p class="eyebrow">Your shortlist</p><h2>{{ message }}</h2></div><span class="result-count">{{ drinks|length }} result{% if drinks|length != 1 %}s{% endif %}</span></div>
+  {% if ocr_text %}<details class="ocr-details"><summary>See text detected in image</summary><p>{{ ocr_text }}</p></details>{% endif %}
+  {% if drinks %}
+  <div class="carousel" aria-label="Drink matches">
+    {% for drink in drinks %}
+    <article class="drink-card glass-card">
+      <div class="card-top"><span class="tag">{{ drink.type }}</span><span class="rating">★ {{ '%.1f'|format(drink.aggregate_rating) }} <small>({{ drink.rating_count }})</small></span></div>
+      <div class="card-art"><div class="card-bottle"><span>{{ drink.name[0] }}</span></div></div>
+      <h3>{{ drink.name }}</h3><p class="flavor">{{ drink.flavor_profile }}</p><p>{{ drink.description }}</p>
+      <div class="taste-meter"><span>Sweet: {{ drink.sweetness }}</span><span>Acid: {{ drink.acidity }}</span><span>Body: {{ drink.strength }}</span></div>
+      <div class="pairing-box"><h4>Pair it with</h4>{% for pairing in drink.pairings %}<div class="pairing"><strong>{{ pairing.name }}</strong><p>{{ pairing.reason }}</p></div>{% endfor %}</div>
+      <form class="rating-form" method="post" action="{{ url_for('rate_drink', drink_id=drink.id) }}"><label>Your rating<select name="rating">{% for value in [5,4.5,4,3.5,3,2.5,2,1.5,1] %}<option value="{{ value }}">{{ value }} ★</option>{% endfor %}</select></label><button type="submit">Save</button></form>
+    </article>
+    {% endfor %}
+  </div>
+  <p class="swipe-hint">Scroll sideways to compare →</p>
+  {% else %}
+  <div class="empty-state"><span>⌕</span><h3>No catalogue match yet</h3><p>Try a broader term such as “wine,” “beer,” “sweet,” or “citrus.”</p></div>
+  {% endif %}
+</section>
+{% endblock %}

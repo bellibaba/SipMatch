@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Ask Sip — SipMatch{% endblock %}
+{% block content %}
+<section class="chat-shell">
+  <div class="chat-intro"><p class="eyebrow">Your no-judgment drink guide</p><h1>Ask Sip</h1><p>Describe a flavor, a meal, or a term you’ve heard. Keep it casual.</p><div class="prompt-chips"><button data-prompt="I like sweet and fruity drinks">Sweet & fruity</button><button data-prompt="What does tannic mean?">What is tannic?</button><button data-prompt="What pairs with spicy food?">Spicy food pairing</button></div></div>
+  <div class="chat-window panel">
+    <div class="bot-message"><span class="avatar">S</span><p>Hi! Tell me what you like or what’s on the menu, and I’ll help you find a comfortable place to start.</p></div>
+    {% if question %}<div class="user-message"><p>{{ question }}</p></div><div class="bot-message"><span class="avatar">S</span><p>{{ answer }}</p></div>{% endif %}
+    <form class="chat-form" method="post"><label class="sr-only" for="question">Ask a question</label><input id="question" name="question" maxlength="500" placeholder="e.g. I want something light for fish tacos…" required><button class="button button-primary" type="submit">Ask <span>↑</span></button></form>
+  </div>
+  <p class="prototype-note">Sip is a rule-based prototype and does not provide health or safety advice.</p>
+</section>
+{% endblock %}

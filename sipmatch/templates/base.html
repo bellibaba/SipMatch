@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SipMatch makes drink discovery approachable through personalized recommendations and food pairings.">
+  <title>{% block title %}SipMatch{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script defer src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('home') }}" aria-label="SipMatch home">
+      <span class="brand-mark">S</span>
+      <span>SipMatch</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav id="main-nav" class="main-nav" aria-label="Main navigation">
+      <a href="{{ url_for('drinks') }}">Discover</a>
+      <a href="{{ url_for('glossary') }}">Taste Lab</a>
+      <a href="{{ url_for('chat') }}">Ask Sip</a>
+      {% if current_user %}
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a class="nav-pill" href="{{ url_for('logout') }}">Log out</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Log in</a>
+        <a class="nav-pill" href="{{ url_for('signup') }}">Find my match</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-stack" aria-live="polite">
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer>
+    <div>
+      <strong class="footer-brand">SipMatch</strong>
+      <p>Learn your taste. Meet your bottle.</p>
+    </div>
+    <p class="responsible-note">For adults of legal drinking age. Please enjoy responsibly.</p>
+  </footer>
+</body>
+</html>

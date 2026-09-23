@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Taste Lab — SipMatch{% endblock %}
+{% block content %}
+<section class="quiz-shell" data-quiz>
+  <div class="quiz-intro"><p class="eyebrow">Taste Lab</p><h1>Talk the talk,<br><em>one sip at a time.</em></h1><p>Five quick questions. Zero wine snobbery.</p><div class="quiz-progress"><span data-progress-bar></span></div><small><span data-progress-text>1</span> of 5</small></div>
+  <div class="quiz-card panel" data-quiz-card>
+    <div class="quiz-icon">◌</div><p class="quiz-kicker">What does it mean?</p><h2 data-question>Loading your first question…</h2><div class="quiz-options" data-options></div><div class="quiz-feedback" data-feedback></div><button class="button button-primary hidden" type="button" data-next>Next question →</button>
+  </div>
+</section>
+<section class="term-strip"><span>Tannic <small>drying grip</small></span><span>Body <small>weight & texture</small></span><span>Acidity <small>freshness & zip</small></span><span>Finish <small>flavor after swallowing</small></span></section>
+{% endblock %}

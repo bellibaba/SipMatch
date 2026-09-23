@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}SipMatch — Your taste, translated{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy reveal">
+    <p class="eyebrow">The bottle aisle, decoded</p>
+    <h1>Your taste,<br><em>translated.</em></h1>
+    <p class="hero-lede">Tell us what you like—or show us the shelf. SipMatch turns everyday preferences into confident drink picks and snack pairings.</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="{{ url_for('signup') if not current_user else url_for('drinks') }}">Find my match <span>→</span></a>
+      <a class="text-link" href="{{ url_for('glossary') }}">Learn the lingo</a>
+    </div>
+    <div class="trust-row">
+      <span>✦ Beginner friendly</span><span>✦ No jargon required</span><span>✦ Pairing reasons included</span>
+    </div>
+  </div>
+  <div class="hero-visual reveal">
+    <div class="orb orb-one"></div><div class="orb orb-two"></div>
+    <div class="bottle-stage">
+      <div class="bottle bottle-left"><span></span></div>
+      <div class="bottle bottle-main"><span class="bottle-label">SIP<br><small>MATCH</small></span></div>
+      <div class="bottle bottle-right"><span></span></div>
+      <div class="match-note"><span>94%</span> taste match</div>
+    </div>
+  </div>
+</section>
+
+<section class="how-section">
+  <div class="section-heading">
+    <p class="eyebrow">No sommelier vocabulary needed</p>
+    <h2>Three steps to a better sip</h2>
+  </div>
+  <div class="step-grid">
+    <article><span class="step-number">01</span><h3>Set your taste</h3><p>Choose familiar flavors and the mood you’re after. We translate them into a useful taste profile.</p></article>
+    <article><span class="step-number">02</span><h3>Scan or search</h3><p>Upload a shelf photo or type a name. Our matcher finds recognizable bottles in the catalogue.</p></article>
+    <article><span class="step-number">03</span><h3>Pick with confidence</h3><p>See why it fits, what to eat with it, and the plain-language terms that help you learn.</p></article>
+  </div>
+</section>
+
+<section class="featured-section">
+  <div class="section-heading horizontal">
+    <div><p class="eyebrow">Community favorites</p><h2>Easy places to start</h2></div>
+    <a class="text-link" href="{{ url_for('drinks') }}">Explore all →</a>
+  </div>
+  <div class="mini-card-grid">
+    {% for drink in featured %}
+    <article class="mini-card">
+      <div class="drink-icon {{ drink.type|lower|replace(' ', '-') }}">{{ drink.type[0] }}</div>
+      <div><span class="tag">{{ drink.type }}</span><h3>{{ drink.name }}</h3><p>{{ drink.flavor_profile }}</p></div>
+      <strong>★ {{ '%.1f'|format(drink.aggregate_rating) }}</strong>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

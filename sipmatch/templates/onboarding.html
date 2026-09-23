@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Build your taste profile — SipMatch{% endblock %}
+{% block content %}
+<section class="page-shell narrow">
+  <div class="page-intro center"><p class="eyebrow">Taste, without the test</p><h1>What sounds good to you?</h1><p>There are no wrong answers. You can change these any time.</p></div>
+  <form class="panel taste-form" method="post">
+    <fieldset><legend>Sweetness</legend><p>From crisp and dry to dessert-like.</p><div class="choice-row">
+      {% for value, label in [('low','Dry'),('medium','Balanced'),('high','Sweet')] %}<label class="choice"><input type="radio" name="sweetness" value="{{ value }}" {% if preference.get('sweetness','medium') == value %}checked{% endif %}><span>{{ label }}</span></label>{% endfor %}
+    </div></fieldset>
+    <fieldset><legend>Acidity / freshness</legend><p>How much bright, mouth-watering zip?</p><div class="choice-row">
+      {% for value, label in [('low','Soft'),('medium','Fresh'),('high','Zesty')] %}<label class="choice"><input type="radio" name="acidity" value="{{ value }}" {% if preference.get('acidity','medium') == value %}checked{% endif %}><span>{{ label }}</span></label>{% endfor %}
+    </div></fieldset>
+    <fieldset><legend>Strength</legend><p>From light and easy to bold and warming.</p><div class="choice-row">
+      {% for value, label in [('low','Light'),('medium','Medium'),('high','Bold')] %}<label class="choice"><input type="radio" name="strength" value="{{ value }}" {% if preference.get('strength','medium') == value %}checked{% endif %}><span>{{ label }}</span></label>{% endfor %}
+    </div></fieldset>
+    <label>Preferred drink family<select name="preferred_type"><option>Any</option>{% for item in ['Red Wine','White Wine','Sparkling Wine','Beer','Cider','Gin','Whiskey','Liqueur'] %}<option {% if preference.get('preferred_type') == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select></label>
+    <label>Past favorites or purchases <small>optional, comma-separated</small><textarea name="past_purchases" rows="3" placeholder="e.g. Modelo, a fruity rosé, an old fashioned">{{ preference.get('past_purchases','') }}</textarea></label>
+    <button class="button button-primary" type="submit">Save & see my matches</button>
+  </form>
+</section>
+{% endblock %}

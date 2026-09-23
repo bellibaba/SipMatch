@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Create an account — SipMatch{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <div class="auth-aside"><p class="eyebrow">Start with what you know</p><h1>You don’t need to know drinks to know what you like.</h1><p>We’ll turn your everyday taste into useful, easy recommendations.</p></div>
+  <form class="panel form-panel" method="post">
+    <h2>Create your account</h2>
+    <label>Name<input type="text" name="name" autocomplete="name" required></label>
+    <label>Email<input type="email" name="email" autocomplete="email" required></label>
+    <label>Password <small>6+ characters</small><input type="password" name="password" minlength="6" autocomplete="new-password" required></label>
+    <button class="button button-primary" type="submit">Continue to taste profile</button>
+    <p class="form-foot">Already a member? <a href="{{ url_for('login') }}">Log in</a></p>
+  </form>
+</section>
+{% endblock %}

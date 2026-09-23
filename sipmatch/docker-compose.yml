@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: sipmatch
+      MYSQL_USER: sipmatch
+      MYSQL_PASSWORD: sipmatch
+      MYSQL_ROOT_PASSWORD: local-root-password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  app:
+    build: .
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: sipmatch
+      DB_USER: sipmatch
+      DB_PASSWORD: sipmatch
+      SECRET_KEY: replace-this-before-production
+    ports:
+      - "${SIPMATCH_PORT:-5050}:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

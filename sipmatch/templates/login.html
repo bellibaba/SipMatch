@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Log in — SipMatch{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <div class="auth-aside"><p class="eyebrow">Welcome back</p><h1>Your next favorite is waiting.</h1><p>Your ratings and taste history make every match a little smarter.</p></div>
+  <form class="panel form-panel" method="post">
+    <h2>Log in</h2>
+    <label>Email<input type="email" name="email" autocomplete="email" required></label>
+    <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
+    <button class="button button-primary" type="submit">Log in</button>
+    <p class="form-foot">New here? <a href="{{ url_for('signup') }}">Create an account</a></p>
+  </form>
+</section>
+{% endblock %}
